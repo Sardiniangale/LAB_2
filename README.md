@@ -1,3 +1,4 @@
 # LAB_2
 
-Python development for a lab course.
+Laboratorio 2 bits and bytes
+
