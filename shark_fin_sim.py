@@ -54,7 +54,7 @@ for i, f_s in enumerate(freqs_sim):
     y_s = get_fish(t_s, n_harm, w_s, tau)
     #subplot
     plt.subplot(3, 1, i+1)
-    plt.plot(t_s, y_s, label="Linia della simulazione")
+    plt.plot(t_s, y_s, label="S")
     plt.title(f"{labels[i]}")
     plt.xlabel("time [s]")
     plt.ylabel("voltage [arb]")
