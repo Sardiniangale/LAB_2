@@ -33,11 +33,14 @@ def get_fish(t, n, w, tau):
     return sig
 
 #get_fish makes the wave
-
+#parte di sotto 
 
 #fa ill high, low and cutoff
 freqs_sim = [f_cut / 10, f_cut, f_cut * 10]
-labels = ["Low Freq (0.1 * fc) - Quasi-Square", "Cutoff Freq (fc) - Shark Fin", "High Freq (10 * fc) - Triangular"]
+
+
+
+labels = ["Low Frequensa(0.1 * fc)-Square", "Cutoff Frequensa(fc)-Pinna di squalo", "High Frequensa(10 * fc)-Triangular"]
 
 #ploting
 
@@ -57,4 +60,6 @@ for i, f_s in enumerate(freqs_sim):
     plt.ylabel("voltage [arb]")
     plt.grid(True, which="both", ls="--")
     plt.legend()
+
+plt.tight_layout(pad=3.0)
 plt.show()
