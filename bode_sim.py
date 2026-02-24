@@ -58,6 +58,20 @@ def get_square_gain_sim(freqs, n_harm, tau):
 y_sine = sine_gain_theory(freqs, tau)
 y_square = get_square_gain_sim(freqs, n_harm, tau)
 
+#load experimental stuff
+#Columns: f (Hz), Vout (V), Sigma_out, Vin (V), Sigma_in
+try:
+    data = np.loadtxt("Esperienza_6/gain.txt")
+    print(f"Loaded {len(data)} experimental data points.")
+    f_exp = data[:, 0]
+    v_out = data[:, 1]
+    v_in = data[:, 3]
+    #calculate gain
+    gain_exp = v_out / v_in
+except Exception as e:
+    print(f"Error loading gain.txt: {e}")
+    f_exp, gain_exp = [], []
+
 #ploting
 plt.figure(figsize=(10, 6))
 
@@ -65,10 +79,14 @@ plt.figure(figsize=(10, 6))
 plt.plot(freqs, y_sine, label="Theoretical Sinusoidale", color="blue", linestyle="-")
 
 #simulated square
-plt.plot(freqs, y_square, label="Simulated Onda quadra", color="red", linestyle="-")
+plt.plot(freqs, y_square, label="Simulated Onda quadra", color="green", linestyle="--")
+
+#experimental dots
+if len(f_exp) > 0:
+    plt.scatter(f_exp, gain_exp, color="red", marker='o', s=25, label="Experimental Data", zorder=5)
 
 #cutoff marker
-plt.axvline(x=f_cut, color="green", linestyle=":", label=f"f_cut = {f_cut:.1f} Hz")
+plt.axvline(x=f_cut, color="black", linestyle=":", label=f"f_cut = {f_cut:.1f} Hz")
 
 plt.xscale("log")
 plt.yscale("log")
@@ -77,4 +95,5 @@ plt.ylabel("Gain (V_out / V_in)")
 plt.title("Integratore with Onda Quadra vs Sinusoidale in Bode plot")
 plt.grid(True, which="both", ls="--", alpha=0.6)
 plt.legend()
-plt.show()
+plt.savefig("bode_plot_corrected.png")
+# plt.show()
