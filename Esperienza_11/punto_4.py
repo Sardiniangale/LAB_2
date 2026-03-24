@@ -3,10 +3,17 @@ from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 import scipy.stats as st
 
+<<<<<<< HEAD
 Filename=("/home/studentelab2/dir_mercoledi/Esperienza_11/25.02.26.GvsF.txt") #reads from here
 
 #loding
 f_j, V_in, delta_in, V_out, delta_out = np.loadtxt(Filename,unpack=True)
+=======
+Filename=("/home/studentelab2/dir_mercoledi/Esperienza_11/holy_fish2.txt") #reads from here
+
+#loding
+V_in, delta_in, V_out, delta_out, f_j = np.loadtxt(Filename,unpack=True)
+>>>>>>> 9012431c83c7e31b5b8fcf683dc7d90ee7630ff1
 
 print(f_j, V_in, delta_in, V_out, delta_out)
 
@@ -30,8 +37,13 @@ sigma_A, sigma_f_t = np.sqrt(np.diag(pcov))
 #grafico
 
 plt.figure()
+<<<<<<< HEAD
 plt.loglog(f_j, G, marker = '.', linestyle = 'None')
 # plt.loglog(f_j, gain(f_j, *popt))
+=======
+plt.loglog(f_j, G, marker = 'o', linestyle = 'None')
+plt.loglog(f_j, gain(f_j, *popt))
+>>>>>>> 9012431c83c7e31b5b8fcf683dc7d90ee7630ff1
 plt.xlabel("F [Hz]")
 plt.ylabel("Gain")
 plt.title("Gain VS F [Hz]")
