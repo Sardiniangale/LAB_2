@@ -1,0 +1,34 @@
+Informazioni tecniche:
+
+    questa pagina serve per l'upload dell'esercizio obbligatorio sulla serie di Fourier;
+    dovete preparare un singolo documento pdf che contiene i grafici prodotti assieme a un minimo di contestualizzazione e informazioni: cercate di essere completi, chiari e non puerili ed evitate, o limitate al minimo, i "cenni teorici" che sono del tutto inutili;
+    state attenti a evitare errori tipo unità di misura in carattere matematico, nomi degli assi mancanti, lettering size troppo piccolo nelle figure, etc.;
+    l'esercizio può essere svolto singolarmente o dal consueto gruppo di laboratorio;
+    se l'esercizio è in gruppo, basta un solo upload (scrivete chiaramente nel file pdf quali sono i componenti del gruppo);
+    la scadenza è una settimana prima del primo appello (o pre-appello, come lo chiama la segreteria)
+
+
+
+Qualche considerazione sull’esercizio/relazione (aka assegnamento) obbligatorio - secondo semestre 2025/26
+
+    1. Scopo
+Lo scopo dell’esercizio è applicare la FFT a dati già in vostro possesso (speriamo!).
+Dovete impiegare l’algoritmo standard di Python (non usate pacchetti vari!) per determinare la magnitudine (ASD) spettrale di un segnale. In sostanza, detto V l’array di dati campionati (il segnale), il comando Python è semplicemente ASD = numpy.abs(numpy.fft.rfft(V)). La parte più complicata è la creazione dell’array delle frequenze, e dovete sapere come si fa (ora e anche alla prova pratica di esame!).
+È sufficiente esprimere la ASD in unità arbitrarie: se volete, potete comunque provare a convertirla in unità fisiche (digit/Hz oppure V/Hz, a seconda che l’array V contenga dati in digit o in unità fisiche).
+Determinare l’incertezza introdotta dall’analisi tramite FFT è compito a cui volentieri rinunciamo. In ogni caso, è prassi ordinaria prendere come incertezza sulla magnitudine l’ampiezza tipica dello spettro nelle regioni in cui non ci si aspetta di avere componenti significative e prendere come incertezza sulle frequenze la risoluzione spettrale (o mezza risoluzione spettrale), che sapete cosa è.
+Non dovrei dirlo, perché esula dagli scopi e induce a imbrogliare, però può essere che le vostre FFT vengano parecchio bruttine. C’è un fenomeno numerico, detto leakage, che potrebbe rendere poco leggibile alcuni spettri. I non-fisici (supponendo arbitrariamente che ai fisici non piaccia assai manipolare i dati – cosa che si fa, ma non al secondo anno!) qualche volta manipolano la FFT introducendo un windowing (potete googolare per vedere cosa è). Il pacchetto standard di Python non permette di scegliere la forma della finestra, che è piatta, ma sono sicuro esistano altri pacchetti che lo fanno. Beh, solo se proprio ne avete tanta voglia, potete anche usare questi pacchetti per prova (come finestra consiglio Hanning), in un solo caso, giusto per vedere come è facile manipolare i dati. 
+
+    2. Quali dati usare e con quali finalità
+Avete un ballino (spero) di file registrati, prodotti sia da Arduino (mi pare almeno forme quadre, triangolari, sinusoidali, pinne di squalo) che dall’oscilloscopio digitale (boh, per esempio la piccola ddp variabile nel tempo nell’esperimento della resistenza dinamica, il segnale raddrizzato e magari anche livellato nell’esperimento del raddrizzatore a singola semionda, segnalei dell’auto-oscillatore più o meno distorti, e poi, infine, i segnali registrati con l’oscillatore smorzato RLC nelle millemila configurazioni da voi esplorate). 
+Le finalità tipiche per cui ha qualche senso impiegare la FFT dipendono dai segnali a disposizione. A grandi linee direi che:
+    • per i segnali periodici, l’interesse principale è nell’individuare l’ampiezza delle componenti armoniche, magari per poi confrontarle con le aspettative oppure, se è il caso, per stimare il grado di distorsione. Inoltre ha senso anche cercare l’eventuale presenza di picchi a frequenze inattese, che potrebbero indicare sorgenti di “rumore” (o segnali spuri dovuti a qualche accoppiamento). 
+    • Per i segnali pseudo-periodici (oscillatore smorzato) invece l’interesse è quello di determinare la posizione del picco e, soprattutto, la larghezza dello spettro, che sapete sicuramente legare ad aspetti fisici.
+Occhio che le due diverse finalità suggeriscono rappresentazioni diverse: nel primo caso in genere conviene usare una scala verticale logaritmica e aggiustare di conseguenza il range graficato sull’asse verticale. Nel secondo caso molto meglio usare una rappresentazione lineare. In entrambi casi è ovvio che il grafico non deve comprendere intervalli (di frequenze, cioè sull’asse orizzontale) che non sono di interesse fisico. Ricordatevelo, perché è molto probabile che di default i vostri spettri coprano un intervallo di frequenze molto elevato, che non ha senso mostrare nella sua interezza.
+
+    3. Cosa scrivere
+Tutto quello che serve, cioè la contestualizzazione dell’esperimento (cosa era, quali grandezze erano state usate per i vari componenti e parametri, l’eventuale confronto con altre analisi tipo best-fit, etc.) e, sforzandovi di essere chiari e sintetici, un minimo di interpretazione dei risultati, soprattutto quando c’è la possibilità di compararli con delle aspettative fisiche chiare. Evitate i “cenni teorici” e ponete un minimo di attenzione nel produrre grafici e testi corretti anche formalmente.
+
+    4. Bonus
+Per chi ne ha voglia, potrebbe essere istruttivo creare (documentandolo opportunamente) qualche metodo per abbattere il rumore nel caso di misure particolarmente rumorose. Questo potrebbe essere il caso della famosa ddp piccola piccola che avete registrato nella misura della resistenza dinamica del diodo (ammesso che non abbiate preso solo segnali in modalità average!). Ci potrebbe anche essere qualche altro caso, per esempio i dati presi nella “calibrazione” di Arduino, che spesso erano affetti da “rumore a 50 Hz” con il risultato di avere delle distribuzioni biforcute (c’è anche una nota su questo).
+Potreste inventarvi un filtro passa-banda numerico e poi, lavorando di FFT e FFT inversa, ricostruire un segnale privo delle componenti di rumore (basta centrare il filtro passa-banda sulla frequenza di interesse).
+Per chi non ha niente di meglio da fare, ci sarebbe anche un’altra robina carina assai, brevemente citata nelle dispenze, consistente nel realizzare una specie di “lock-in” (detezione sincrona) numerico. L’argomento non è proprio la FFT, ma in qualche modo ci somiglia. Allora, ammesso che abbiate segnali modulati a qualche frequenza e abbastanza rumorosi, potresti divertirvi a ricostruire l’ampiezza simulando, appunto, un lock-in. Sarebbe molto carino e istruttivo!
